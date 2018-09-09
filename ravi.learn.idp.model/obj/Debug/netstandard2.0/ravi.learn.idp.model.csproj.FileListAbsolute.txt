@@ -1,0 +1,12 @@
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.csprojAssemblyReference.cache
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.csproj.CoreCompileInputs.cache
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.AssemblyInfoInputs.cache
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.AssemblyInfo.cs
+D:\code\plural\idp\ravi.learn.idp.model\bin\Debug\netstandard2.0\ravi.learn.idp.model.deps.json
+D:\code\plural\idp\ravi.learn.idp.model\bin\Debug\netstandard2.0\ravi.learn.idp.model.dll
+D:\code\plural\idp\ravi.learn.idp.model\bin\Debug\netstandard2.0\ravi.learn.idp.model.pdb
+D:\code\plural\idp\ravi.learn.idp.model\bin\Debug\netstandard2.0\System.ComponentModel.Annotations.dll
+D:\code\plural\idp\ravi.learn.idp.model\bin\Debug\netstandard2.0\System.ComponentModel.Annotations.xml
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.csproj.CopyComplete
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.dll
+D:\code\plural\idp\ravi.learn.idp.model\obj\Debug\netstandard2.0\ravi.learn.idp.model.pdb
