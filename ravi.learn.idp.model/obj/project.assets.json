@@ -30,7 +30,7 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "HJqV3xS5Pl/wPOULuBDsu8KMNzLCY0XBPSxHzRHmJJ/NMyrQORE8W1mhEMcn8udJJhfFiX75kmviitJwEm3wCQ==",
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
@@ -176,23 +176,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rgavarasana\\.nuget\\packages\\": {},
+    "C:\\Users\\Ravi Gavarasana\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\ravi.learn.idp.model.csproj",
+      "projectUniqueName": "D:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\ravi.learn.idp.model.csproj",
       "projectName": "ravi.learn.idp.model",
-      "projectPath": "C:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\ravi.learn.idp.model.csproj",
-      "packagesPath": "C:\\Users\\rgavarasana\\.nuget\\packages\\",
-      "outputPath": "C:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\obj\\",
+      "projectPath": "D:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\ravi.learn.idp.model.csproj",
+      "packagesPath": "C:\\Users\\Ravi Gavarasana\\.nuget\\packages\\",
+      "outputPath": "D:\\code\\learn\\core2-oidc\\ravi.learn.idp.model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\rgavarasana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ravi Gavarasana\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -200,7 +200,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "\\\\ine1dv-idap-001.ehnp.corp.evolenthealth.com\\packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

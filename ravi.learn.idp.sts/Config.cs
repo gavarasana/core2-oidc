@@ -55,7 +55,27 @@ namespace ravi.learn.idp.sts
 
         public static IEnumerable<Client> GetClients()
         {
-            return new List<Client>();
+            return new List<Client>
+            {
+                new Client
+                {
+                    ClientId = "ImageGallery",
+                    ClientName = "Image Gallery",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new [] { "https://localhost:44360/signin-oidc" },
+                    AllowedScopes = new []
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    ClientSecrets = new[]
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    PostLogoutRedirectUris =new [] { "https://localhost:44360/signout-callback-oidc" },
+                    RequireConsent = false
+                }
+            };
         }
     }
 }

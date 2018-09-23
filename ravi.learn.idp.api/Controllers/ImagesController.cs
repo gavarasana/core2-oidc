@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ravi.learn.idp.model;
+using System.Security.Claims;
 
 namespace ImageGallery.API.Controllers
 {
@@ -23,9 +24,10 @@ namespace ImageGallery.API.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        [HttpGet()]
-        public IActionResult GetImages()
+       // [HttpGet("{ownerId}")]
+        public IActionResult GetImages(string ownerId)
         {
+            //var ownerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             // get from repo
             var imagesFromRepo = _galleryRepository.GetImages();
 

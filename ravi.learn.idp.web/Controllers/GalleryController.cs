@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Newtonsoft.Json;
 using ravi.learn.idp.model;
 using ravi.learn.idp.web.Services;
@@ -8,10 +13,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ravi.learn.idp.web.Controllers
 {
+    [Authorize]
     public class GalleryController : Controller
     {
         private readonly IImageGalleryHttpClient _imageGalleryHttpClient;
@@ -23,10 +31,17 @@ namespace ravi.learn.idp.web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient(); 
+            var idToken = await HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.IdToken);
+            ViewBag.Token = idToken;
 
-            var response = await httpClient.GetAsync("api/images").ConfigureAwait(false);
+            ViewBag.Claims = RetrieveClaims(User.Claims);
+
+            // call the API
+            var httpClient = _imageGalleryHttpClient.GetClient();
+
+          //  var ownerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           // httpClient.DefaultRequestHeaders.Add("authorization", $"bearer {User.FindFirst(ClaimTypes.NameIdentifier).Value}");
+            var response = await httpClient.GetAsync($"api/images").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
@@ -39,6 +54,16 @@ namespace ravi.learn.idp.web.Controllers
             }          
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        private string RetrieveClaims(IEnumerable<Claim> claims)
+        {
+            var claimCollection = new StringBuilder();
+            foreach (var claim in claims)
+            {
+                claimCollection.Append($"Claim Type: {claim.Type} Claim Value:{claim.Value}\n");
+            }
+            return claimCollection.ToString();
         }
 
         public async Task<IActionResult> EditImage(Guid id)
@@ -161,5 +186,14 @@ namespace ravi.learn.idp.web.Controllers
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }               
+
+        public async Task Logout()
+        {
+            // will clear out the cookie
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        }
     }
+
+    
 }

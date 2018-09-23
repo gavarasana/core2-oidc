@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +31,26 @@ namespace ravi.learn.idp.web
 
             // register an IImageGalleryHttpClient
             services.AddScoped<IImageGalleryHttpClient, ImageGalleryHttpClient>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+
+
+            })
+               .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+               {
+                   options.Authority = "https://localhost:44313";
+                   options.ClientId = "ImageGallery";
+                   options.ClientSecret = "secret";
+                   options.ResponseType = "code id_token";
+                   options.Scope.Add("openid");
+                   options.Scope.Add("profile");
+                   options.SaveTokens = true;
+                   options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+               });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +66,8 @@ namespace ravi.learn.idp.web
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
