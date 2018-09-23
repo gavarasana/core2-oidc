@@ -74,6 +74,7 @@ namespace ravi.learn.idp.sts
                     },
                     PostLogoutRedirectUris =new [] { "https://localhost:44360/signout-callback-oidc" },
                     RequireConsent = false
+
                 }
             };
         }

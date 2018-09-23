@@ -50,6 +50,7 @@ namespace ravi.learn.idp.web
                    options.Scope.Add("profile");
                    options.SaveTokens = true;
                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                   options.GetClaimsFromUserInfoEndpoint = true;
                });
         }
 
@@ -73,7 +74,7 @@ namespace ravi.learn.idp.web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Gallery}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
