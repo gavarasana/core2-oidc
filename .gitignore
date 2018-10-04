@@ -1,6 +1,7 @@
 # Don't track content of these folders
 bin/
 obj/
+v15/
 
 # Compiled source #
 ###################
@@ -22,4 +23,5 @@ obj/
 *.rar
 *.tar
 *.zip
-
+*.dtbcache
+*.suo
