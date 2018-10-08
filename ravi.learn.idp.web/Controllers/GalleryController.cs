@@ -1,4 +1,5 @@
-﻿using IdentityModel.Client;
+﻿using IdentityModel;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -207,8 +208,9 @@ namespace ravi.learn.idp.web.Controllers
             {
                 throw new Exception("Problem accessing the userInfo endpoint");
             }
+            var address = response.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Address)?.Value;
 
-            var orderFrameViewModel = new OrderFrameViewModel("address");
+            var orderFrameViewModel = new OrderFrameViewModel(address);
             return View(orderFrameViewModel);
         }
     }
