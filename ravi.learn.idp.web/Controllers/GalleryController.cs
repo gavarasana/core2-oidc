@@ -196,6 +196,7 @@ namespace ravi.learn.idp.web.Controllers
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         }
 
+        [Authorize(Roles = "paiduser")]
         public async Task<IActionResult> OrderFrame()
         {
             var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);

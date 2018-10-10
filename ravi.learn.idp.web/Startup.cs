@@ -45,7 +45,9 @@ namespace ravi.learn.idp.web
 
 
             })
-               .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => {
+                   options.AccessDeniedPath = "/Authorization/AccessDenied";
+               })
                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                {
                    options.Authority = "https://localhost:44313";
@@ -62,13 +64,13 @@ namespace ravi.learn.idp.web
                    options.ClaimActions.Remove("amr");
                    options.ClaimActions.DeleteClaim("idp");
                    options.ClaimActions.MapUniqueJsonKey("role", "role");
-                   /*
+                   
                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                    {
                        NameClaimType = JwtClaimTypes.GivenName,
                        RoleClaimType = JwtClaimTypes.Role
                    };
-                   */
+                   
                    
                });
         }

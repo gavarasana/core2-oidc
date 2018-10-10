@@ -93,3 +93,4 @@ D:\code\learn\core2-oidc\ravi.learn.idp.web\obj\Debug\netcoreapp2.1\ravi.learn.i
 D:\code\learn\core2-oidc\ravi.learn.idp.web\obj\Debug\netcoreapp2.1\ravi.learn.idp.web.dll
 D:\code\learn\core2-oidc\ravi.learn.idp.web\obj\Debug\netcoreapp2.1\ravi.learn.idp.web.pdb
 D:\code\learn\core2-oidc\ravi.learn.idp.web\obj\Debug\netcoreapp2.1\Razor\Views\Gallery\OrderFrame.g.cshtml.cs
+D:\code\learn\core2-oidc\ravi.learn.idp.web\obj\Debug\netcoreapp2.1\Razor\Views\Authorization\AccessDenied.g.cshtml.cs
