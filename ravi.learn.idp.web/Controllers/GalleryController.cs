@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -192,6 +194,25 @@ namespace ravi.learn.idp.web.Controllers
             // will clear out the cookie
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        }
+
+        [Authorize(Roles = "paiduser")]
+        public async Task<IActionResult> OrderFrame()
+        {
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);
+
+            var discoveryClient = new DiscoveryClient("https://localhost:44313/");
+            var metadataResponse = await discoveryClient.GetAsync();
+            var userinfoClient = new UserInfoClient(metadataResponse.UserInfoEndpoint);
+            var response = await userinfoClient.GetAsync(accessToken);
+            if (response.IsError)
+            {
+                throw new Exception("Problem accessing the userInfo endpoint");
+            }
+            var address = response.Claims.FirstOrDefault(c => c.Type == JwtClaimTypes.Address)?.Value;
+
+            var orderFrameViewModel = new OrderFrameViewModel(address);
+            return View(orderFrameViewModel);
         }
     }
 
