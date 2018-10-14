@@ -38,13 +38,14 @@ namespace ravi.learn.idp.web
             // register an IImageGalleryHttpClient
             services.AddScoped<IImageGalleryHttpClient, ImageGalleryHttpClient>();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 
 
-            })
+                })
                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => {
                    options.AccessDeniedPath = "/Authorization/AccessDenied";
                })
@@ -58,21 +59,36 @@ namespace ravi.learn.idp.web
                    options.Scope.Add("profile");
                    options.Scope.Add("address");
                    options.Scope.Add("roles");
+                   options.Scope.Add("Country");
+                   options.Scope.Add("SubscriptionLevel");
+                   options.Scope.Add("imagegalleryapi");
                    options.SaveTokens = true;
                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                    options.GetClaimsFromUserInfoEndpoint = true;
                    options.ClaimActions.Remove("amr");
                    options.ClaimActions.DeleteClaim("idp");
                    options.ClaimActions.MapUniqueJsonKey("role", "role");
+                   options.ClaimActions.MapUniqueJsonKey("subscriptionlevel", "subscriptionlevel");
+                   options.ClaimActions.MapUniqueJsonKey("country", "country");
                    
                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                    {
                        NameClaimType = JwtClaimTypes.GivenName,
                        RoleClaimType = JwtClaimTypes.Role
-                   };
-                   
+                   };                  
                    
                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("OrderFrame", policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireClaim("country", "be");
+                    policyBuilder.RequireClaim("subscriptionlevel", "paiduser");
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +106,7 @@ namespace ravi.learn.idp.web
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
 
             app.UseMvc(routes =>
             {

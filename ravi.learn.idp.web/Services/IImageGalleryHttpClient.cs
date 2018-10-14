@@ -5,6 +5,6 @@ namespace ravi.learn.idp.web.Services
 {
     public interface IImageGalleryHttpClient
     {
-        HttpClient GetClient();
+        Task<HttpClient> GetClientAsync();
     }
 }

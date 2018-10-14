@@ -13,6 +13,9 @@ namespace ravi.learn.idp.sts
     public static class Config
     {
         private const string ROLE_IDENTITY_RESOURCE_NAME = "roles";
+        private const string GALLERY_API_RESOURCE_NAME = "imagegalleryapi";
+        private const string SUBSCRIPTION_LEVEL_IDENTITY_NAME = "subscriptionlevel";
+        private const string COUNTRY_IDENTITY_NAME = "country";
         public static List<TestUser> GetUsers()
         {
             return new List<TestUser>
@@ -31,7 +34,9 @@ namespace ravi.learn.idp.sts
                         new Claim (ClaimTypes.Gender, "Male"),
                         new Claim (ClaimTypes.DateOfBirth, "1972-09-12"),
                         new Claim("address","234 South St, Columbia, MD - 65121"),
-                        new Claim("role", "freeuser")
+                        new Claim("role", "freeuser"),
+                        new Claim(SUBSCRIPTION_LEVEL_IDENTITY_NAME, "freeuser"),
+                        new Claim(COUNTRY_IDENTITY_NAME, "nl")
                     }
                 },
                  new TestUser
@@ -48,7 +53,9 @@ namespace ravi.learn.idp.sts
                         new Claim (ClaimTypes.Gender, "Female"),
                         new Claim (ClaimTypes.DateOfBirth, "1975-05-21"),
                         new Claim(JwtClaimTypes.Address,"123 Main St, Aldie, VA - 20105"),
-                        new Claim(JwtClaimTypes.Role, "paiduser")
+                        new Claim(JwtClaimTypes.Role, "paiduser"),
+                        new Claim(SUBSCRIPTION_LEVEL_IDENTITY_NAME, "paiduser"),
+                        new Claim(COUNTRY_IDENTITY_NAME, "be")
                     }
                 }
             };
@@ -61,7 +68,18 @@ namespace ravi.learn.idp.sts
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Address(),
-                new IdentityResource(ROLE_IDENTITY_RESOURCE_NAME,"Your role(s)", new List<string> { JwtClaimTypes.Role})
+                new IdentityResource(ROLE_IDENTITY_RESOURCE_NAME,"Your role(s)", new List<string> { JwtClaimTypes.Role}),
+                new IdentityResource("SubscriptionLevel","Your subcription level", new List<string> {SUBSCRIPTION_LEVEL_IDENTITY_NAME}),
+                new IdentityResource("Country","Your country", new List<string> { COUNTRY_IDENTITY_NAME })
+                
+            };
+        }
+
+        public static IEnumerable<ApiResource> GetApiResources()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource(GALLERY_API_RESOURCE_NAME,"Image gallery API",new List<string> { JwtClaimTypes.Role})
             };
         }
 
@@ -80,7 +98,10 @@ namespace ravi.learn.idp.sts
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
-                        ROLE_IDENTITY_RESOURCE_NAME
+                        ROLE_IDENTITY_RESOURCE_NAME,
+                        GALLERY_API_RESOURCE_NAME,
+                        "SubscriptionLevel",
+                        "Country"
                     },
                     ClientSecrets = new[]
                     {

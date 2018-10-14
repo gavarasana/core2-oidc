@@ -39,7 +39,7 @@ namespace ravi.learn.idp.web.Controllers
             ViewBag.Claims = RetrieveClaims(User.Claims);
 
             // call the API
-            var httpClient = _imageGalleryHttpClient.GetClient();
+            var httpClient = await _imageGalleryHttpClient.GetClientAsync();
 
           //  var ownerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
            // httpClient.DefaultRequestHeaders.Add("authorization", $"bearer {User.FindFirst(ClaimTypes.NameIdentifier).Value}");
@@ -53,7 +53,10 @@ namespace ravi.learn.idp.web.Controllers
                     JsonConvert.DeserializeObject<IList<Image>>(imagesAsString).ToList());
 
                 return View(galleryIndexViewModel);
-            }          
+            }else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized || response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            {
+                return Redirect("/Authorization/AccessDenied");
+            }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
@@ -71,7 +74,7 @@ namespace ravi.learn.idp.web.Controllers
         public async Task<IActionResult> EditImage(Guid id)
         {
             // call the API
-            var httpClient =  _imageGalleryHttpClient.GetClient();
+            var httpClient = await _imageGalleryHttpClient.GetClientAsync();
 
             var response = await httpClient.GetAsync($"api/images/{id}").ConfigureAwait(false);
 
@@ -109,7 +112,7 @@ namespace ravi.learn.idp.web.Controllers
             var serializedImageForUpdate = JsonConvert.SerializeObject(imageForUpdate);
 
             // call the API
-            var httpClient =  _imageGalleryHttpClient.GetClient();
+            var httpClient = await _imageGalleryHttpClient.GetClientAsync();
 
             var response = await httpClient.PutAsync(
                 $"api/images/{editImageViewModel.Id}",
@@ -127,7 +130,7 @@ namespace ravi.learn.idp.web.Controllers
         public async Task<IActionResult> DeleteImage(Guid id)
         {
             // call the API
-            var httpClient =  _imageGalleryHttpClient.GetClient();
+            var httpClient = await _imageGalleryHttpClient.GetClientAsync();
 
             var response = await httpClient.DeleteAsync($"api/images/{id}").ConfigureAwait(false);
 
@@ -139,12 +142,14 @@ namespace ravi.learn.idp.web.Controllers
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
         
+        [Authorize(Roles = "paiduser")]
         public IActionResult AddImage()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "paiduser")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddImage(AddImageViewModel addImageViewModel)
         {   
@@ -174,7 +179,7 @@ namespace ravi.learn.idp.web.Controllers
             var serializedImageForCreation = JsonConvert.SerializeObject(imageForCreation);
 
             // call the API
-            var httpClient =  _imageGalleryHttpClient.GetClient();
+            var httpClient = await _imageGalleryHttpClient.GetClientAsync();
 
             var response = await httpClient.PostAsync(
                 $"api/images",
@@ -196,7 +201,9 @@ namespace ravi.learn.idp.web.Controllers
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         }
 
-        [Authorize(Roles = "paiduser")]
+        //[Authorize(Roles = "paiduser")]
+        [Authorize(Policy = "OrderFrame")]
+
         public async Task<IActionResult> OrderFrame()
         {
             var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);

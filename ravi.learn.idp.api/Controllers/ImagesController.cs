@@ -8,10 +8,17 @@ using System.Collections.Generic;
 using System.IO;
 using ravi.learn.idp.model;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Threading.Tasks;
 
 namespace ImageGallery.API.Controllers
 {
     [Route("api/images")]
+    [Authorize]
     public class ImagesController : Controller
     {
         private readonly IGalleryRepository _galleryRepository;
@@ -25,11 +32,12 @@ namespace ImageGallery.API.Controllers
         }
 
        // [HttpGet("{ownerId}")]
-        public IActionResult GetImages(string ownerId)
+        public IActionResult GetImages()
         {
-            //var ownerId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var ownerId = User.FindFirst(JwtClaimTypes.Subject).Value;
+           // var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);
             // get from repo
-            var imagesFromRepo = _galleryRepository.GetImages();
+            var imagesFromRepo = _galleryRepository.GetImages(ownerId);
 
             // map to model
             var imagesToReturn = Mapper.Map<IEnumerable<Model.Image>>(imagesFromRepo);
@@ -54,6 +62,7 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpPost()]
+        [Authorize(Roles = "paiduser")]
         public IActionResult CreateImage([FromBody] ImageForCreation imageForCreation)
         {
             if (imageForCreation == null)
@@ -69,6 +78,9 @@ namespace ImageGallery.API.Controllers
 
             // Automapper maps only the Title in our configuration
             var imageEntity = Mapper.Map<Entities.Image>(imageForCreation);
+
+            
+
 
             // Create an image from the passed-in bytes (Base64), and 
             // set the filename on the image
@@ -91,7 +103,8 @@ namespace ImageGallery.API.Controllers
 
             // ownerId should be set - can't save image in starter solution, will
             // be fixed during the course
-            //imageEntity.OwnerId = ...;
+
+            imageEntity.OwnerId = User.FindFirst(JwtClaimTypes.Subject).Value;
 
             // add and save.  
             _galleryRepository.AddImage(imageEntity);
