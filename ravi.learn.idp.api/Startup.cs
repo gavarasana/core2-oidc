@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using IdentityServer4.AccessTokenValidation;
 
 namespace ravi.learn.idp.api
 {
@@ -24,6 +25,13 @@ namespace ravi.learn.idp.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "https://localhost:44313";
+                        options.ApiName = "imagegalleryapi";
+                    });
 
 
             // register the DbContext on the container, getting the connection string from
@@ -82,6 +90,8 @@ namespace ravi.learn.idp.api
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
+
             app.UseMvc();
         }
     }

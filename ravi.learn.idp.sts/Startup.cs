@@ -28,6 +28,7 @@ namespace ravi.learn.idp.sts
                     .AddDeveloperSigningCredential()
                     .AddTestUsers(Config.GetUsers())
                     .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                    .AddInMemoryApiResources(Config.GetApiResources())
                     .AddInMemoryClients(Config.GetClients());
 
             services.Configure<CookiePolicyOptions>(options =>
