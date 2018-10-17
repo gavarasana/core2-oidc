@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IdentityServer4.AccessTokenValidation;
+using ravi.learn.idp.api.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ravi.learn.idp.api
 {
@@ -38,9 +40,11 @@ namespace ravi.learn.idp.api
                 authorizationOptions.AddPolicy("MustOwnImage", policyBuilder => 
                 {
                     policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.AddRequirements(new MustOwnImageRequirement());
 
                 });
             });
+
             // register the DbContext on the container, getting the connection string from
             // appSettings (note: use this during development; in a production environment,
             // it's better to store the connection string in an environment variable)
@@ -49,6 +53,7 @@ namespace ravi.learn.idp.api
 
             // register the repository
             services.AddScoped<IGalleryRepository, GalleryRepository>();
+            services.AddScoped<IAuthorizationHandler, MustOwnImageHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
