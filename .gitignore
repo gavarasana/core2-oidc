@@ -10,6 +10,9 @@ v15/
 *.user
 *.dll
 *.exe
+*.dtbcache
+*.suo
+*.ide-shm
 
 
 # Packages #
@@ -24,5 +27,3 @@ v15/
 *.rar
 *.tar
 *.zip
-*.dtbcache
-*.suo
