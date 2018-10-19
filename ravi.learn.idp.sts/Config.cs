@@ -24,7 +24,7 @@ namespace ravi.learn.idp.sts
                 {
                     SubjectId = "d860efca-22d9-47fd-8249-791ba61b07c7",
                     Username = "Frank",
-                    Password = "passw0rd",
+                    Password = "passw0rd",                    
                     Claims = new List<Claim>
                     {
                         //new Claim (ClaimTypes.GivenName, "Frank"),
@@ -57,6 +57,12 @@ namespace ravi.learn.idp.sts
                         new Claim(SUBSCRIPTION_LEVEL_IDENTITY_NAME, "paiduser"),
                         new Claim(COUNTRY_IDENTITY_NAME, "be")
                     }
+                },
+                new TestUser
+                {
+                    SubjectId = "4A110DB0-0FC2-4266-BB63-BAC7108ECC97",
+                    Username = "System",
+                    Password = "5y5tem"
                 }
             };
         }
@@ -92,6 +98,7 @@ namespace ravi.learn.idp.sts
                     ClientId = "ImageGallery",
                     ClientName = "Image Gallery",
                     AllowedGrantTypes = GrantTypes.Hybrid,
+                    AccessTokenLifetime = 120,
                     RedirectUris = new [] { "https://localhost:44360/signin-oidc" },
                     AllowedScopes = new []
                     {
@@ -110,6 +117,21 @@ namespace ravi.learn.idp.sts
                     PostLogoutRedirectUris =new [] { "https://localhost:44360/signout-callback-oidc" },
                     RequireConsent = false
 
+                },
+                new Client
+                {
+                    ClientId = "IntegrationSvc",
+                    ClientName = "Integration Service",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                     ClientSecrets = new[]
+                    {
+                        new Secret("-Yell0wcar-".Sha256())
+                    },
+                    AllowedScopes = new []
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        GALLERY_API_RESOURCE_NAME
+                    }
                 }
             };
         }
