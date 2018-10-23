@@ -62,6 +62,7 @@ namespace ravi.learn.idp.web
                    options.Scope.Add("Country");
                    options.Scope.Add("SubscriptionLevel");
                    options.Scope.Add("imagegalleryapi");
+                   options.Scope.Add("offline_access");
                    options.SaveTokens = true;
                    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                    options.GetClaimsFromUserInfoEndpoint = true;

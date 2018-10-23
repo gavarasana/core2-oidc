@@ -99,6 +99,8 @@ namespace ravi.learn.idp.sts
                     ClientName = "Image Gallery",
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AccessTokenLifetime = 120,
+                    AllowOfflineAccess = true,
+                    UpdateAccessTokenClaimsOnRefresh = true,
                     RedirectUris = new [] { "https://localhost:44360/signin-oidc" },
                     AllowedScopes = new []
                     {
