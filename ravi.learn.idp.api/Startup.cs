@@ -33,6 +33,7 @@ namespace ravi.learn.idp.api
                     {
                         options.Authority = "https://localhost:44313";
                         options.ApiName = "imagegalleryapi";
+                        options.ApiSecret = "secret";
                     });
 
             services.AddAuthorization(authorizationOptions => 

@@ -85,7 +85,7 @@ namespace ravi.learn.idp.sts
         {
             return new List<ApiResource>
             {
-                new ApiResource(GALLERY_API_RESOURCE_NAME,"Image gallery API",new List<string> { JwtClaimTypes.Role})
+                new ApiResource(GALLERY_API_RESOURCE_NAME,"Image gallery API",new List<string> { JwtClaimTypes.Role}){ApiSecrets = {new Secret("secret".ToSha256())}}
             };
         }
 
@@ -98,6 +98,7 @@ namespace ravi.learn.idp.sts
                     ClientId = "ImageGallery",
                     ClientName = "Image Gallery",
                     AllowedGrantTypes = GrantTypes.Hybrid,
+                    AccessTokenType = AccessTokenType.Reference,
                     AccessTokenLifetime = 120,
                     AllowOfflineAccess = true,                    
                     UpdateAccessTokenClaimsOnRefresh = true,
