@@ -25,11 +25,25 @@ namespace ravi.learn.idp.web.Services
 
         public async Task<HttpClient> GetClientAsync()
         {
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);
+            var currentContext = _httpContextAccessor.HttpContext;
+
+           
             _httpClient.BaseAddress = new Uri("https://localhost:44310/");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var expiresAt = await currentContext.GetTokenAsync("expires_at");
+
+            string accessToken = null;
+
+            if ((string.IsNullOrEmpty(expiresAt)) || (DateTime.Parse(expiresAt).AddSeconds(-60).ToUniversalTime() < DateTime.UtcNow))
+            {
+                accessToken = await RenewTokens();
+            }else
+            {
+                accessToken = await currentContext.GetTokenAsync(OpenIdConnectDefaults.AuthenticationScheme, OpenIdConnectParameterNames.AccessToken);
+            }
+
             _httpClient.SetBearerToken(accessToken);
 
             return _httpClient;

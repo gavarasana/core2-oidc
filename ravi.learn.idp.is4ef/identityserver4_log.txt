@@ -559,3 +559,9 @@ Error Number:208,State:1,Class:16
 2018-10-20 16:06:09.056 -04:00 [INF] AuthenticationScheme: idsrv was successfully authenticated.
 2018-10-20 16:06:09.057 -04:00 [INF] AuthenticationScheme: idsrv was successfully authenticated.
 2018-10-20 16:06:09.072 -04:00 [DBG] 0 persisted grants found for 88421113
+2018-10-24 20:27:04.786 -04:00 [DBG] Using idsrv as default scheme for authentication
+2018-10-24 20:27:04.815 -04:00 [DBG] Using idsrv as default scheme for sign-in
+2018-10-24 20:27:04.816 -04:00 [DBG] Using idsrv as default scheme for sign-out
+2018-10-24 20:27:04.816 -04:00 [DBG] Using idsrv as default scheme for challenge
+2018-10-24 20:27:04.816 -04:00 [DBG] Using idsrv as default scheme for forbid
+2018-10-24 20:27:05.233 -04:00 [DBG] Starting token cleanup
