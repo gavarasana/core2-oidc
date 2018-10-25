@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ravi.learn.idp.model", "rav
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ravi.learn.idp.web", "ravi.learn.idp.web\ravi.learn.idp.web.csproj", "{C701221B-1F2C-4FB1-85FA-9D843B6F9D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ravi.learn.idp.sts", "ravi.learn.idp.sts\ravi.learn.idp.sts.csproj", "{A5C58538-6E42-4EDA-963E-59AB8759430B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ravi.learn.idp.sts", "ravi.learn.idp.sts\ravi.learn.idp.sts.csproj", "{A5C58538-6E42-4EDA-963E-59AB8759430B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ravi.learn.idp.console", "ravi.learn.idp.console\ravi.learn.idp.console.csproj", "{DACFEA01-A0F4-4FCB-8A4F-5ADE1AA45222}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ravi.learn.idp.is4ef", "ravi.learn.idp.is4ef\ravi.learn.idp.is4ef.csproj", "{4049A635-1DE0-4B7E-A1A8-2AC2CB89FAD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{A5C58538-6E42-4EDA-963E-59AB8759430B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C58538-6E42-4EDA-963E-59AB8759430B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5C58538-6E42-4EDA-963E-59AB8759430B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DACFEA01-A0F4-4FCB-8A4F-5ADE1AA45222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DACFEA01-A0F4-4FCB-8A4F-5ADE1AA45222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DACFEA01-A0F4-4FCB-8A4F-5ADE1AA45222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DACFEA01-A0F4-4FCB-8A4F-5ADE1AA45222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4049A635-1DE0-4B7E-A1A8-2AC2CB89FAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4049A635-1DE0-4B7E-A1A8-2AC2CB89FAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4049A635-1DE0-4B7E-A1A8-2AC2CB89FAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4049A635-1DE0-4B7E-A1A8-2AC2CB89FAD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
