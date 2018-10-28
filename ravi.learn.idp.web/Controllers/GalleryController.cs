@@ -209,6 +209,32 @@ namespace ravi.learn.idp.web.Controllers
 
         public async Task Logout()
         {
+            var discoveryClient = new DiscoveryClient("https://localhost:44313/");
+            var metaDataResponse = await discoveryClient.GetAsync();
+
+            var revocationClient = new TokenRevocationClient(metaDataResponse.RevocationEndpoint, "ImageGallery", "secret");
+
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                var revocationResponse = await revocationClient.RevokeAccessTokenAsync(accessToken);
+                if (revocationResponse.IsError)
+                {
+                    throw new Exception("Problem occurred when revoking the access token", revocationResponse.Exception);
+                }
+            }
+
+            var refreshToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                var revocationResponse = await revocationClient.RevokeAccessTokenAsync(refreshToken);
+                if (revocationResponse.IsError)
+                {
+                    throw new Exception("Problem occurred when revoking the refresh token", revocationResponse.Exception);
+                }
+            }
             // will clear out the cookie
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);

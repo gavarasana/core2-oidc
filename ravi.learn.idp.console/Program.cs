@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using ravi.learn.idp.model;
 using ravi.learn.idp.console.models;
+using System.Security.Principal;
 
 namespace ravi.learn.idp.console
 {
@@ -32,6 +33,11 @@ namespace ravi.learn.idp.console
             }
 
             Console.ReadLine();
+        }
+
+        static GenericPrincipal GetGenericPrincipal()
+        {
+
         }
 
         private static async Task<GalleryIndexViewModel> InvokeApi()
